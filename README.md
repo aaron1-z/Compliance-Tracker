@@ -4,7 +4,8 @@
 
  <img width="959" height="446" alt="image" src="https://github.com/user-attachments/assets/b3964e1b-309e-442e-bd1c-6ffcd3862668" />
 
-
+*Live:** [https://compliance-tracker-pearl.vercel.app](https://compliance-tracker-pearl.vercel.app)
+**API:** [https://compliance-tracker-api-n2pm.onrender.com](https://compliance-tracker-api-n2pm.onrender.com)
 
 A full-stack web app to manage compliance tasks and deadlines for clients.
 ## Tech Stack
@@ -31,3 +32,12 @@ Features
 --Toggle task status between Pending and Completed
 --Overdue task highlighting
 
+Tradeoffs
+--SQLite for simplicity — not suited for concurrent/multi-user scaling
+--No auth — scope limited to task management
+--Render free tier has ~30s cold start after inactivity
+
+Assumptions
+--Small-scale, single-user usage
+--Clients are pre-seeded; no client CRUD UI
+--Fixed categories (Tax, Audit, Legal, Regulatory) and priorities (Low, Medium, High)
