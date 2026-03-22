@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 export default function ClientList({ selectedClient, setClient }) {
   const [clients, setClients] = useState([]);
@@ -7,7 +8,7 @@ export default function ClientList({ selectedClient, setClient }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/clients")
+      .get(`${API_URL}/clients`)
       .then((res) => setClients(res.data))
       .catch((err) => {
         console.error("Failed to load clients:", err);

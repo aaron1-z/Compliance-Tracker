@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 export default function TaskList({ selectedClient, refreshKey }) {
   const [tasks, setTasks] = useState([]);
@@ -8,7 +9,7 @@ export default function TaskList({ selectedClient, refreshKey }) {
   useEffect(() => {
     if (selectedClient) {
       axios
-        .get(`http://localhost:5000/tasks/${selectedClient.id}`)
+        .get(`${API_URL}/tasks/${selectedClient.id}`)
         .then((res) => setTasks(res.data))
         .catch((err) => console.error("Failed to load tasks:", err));
     }
@@ -17,7 +18,7 @@ export default function TaskList({ selectedClient, refreshKey }) {
   const updateStatus = (id, status) => {
     const newStatus = status === "Pending" ? "Completed" : "Pending";
     axios
-      .put(`http://localhost:5000/tasks/${id}`, { status: newStatus })
+      .put(`${API_URL}/tasks/${id}`, { status: newStatus })
       .then(() => {
         setTasks((prev) =>
           prev.map((task) =>

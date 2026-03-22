@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 export default function AddTask({ selectedClient, onTaskAdded }) {
   const [title, setTitle] = useState("");
@@ -13,7 +14,7 @@ export default function AddTask({ selectedClient, onTaskAdded }) {
 
     setSubmitting(true);
     axios
-      .post("http://localhost:5000/tasks", {
+      .post(`${API_URL}/tasks`, {
         client_id: selectedClient.id,
         title: title.trim(),
         description: "",
