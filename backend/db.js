@@ -24,6 +24,12 @@ db.serialize(() => {
       priority TEXT
     )
   `);
+  
+  db.run(`
+    INSERT OR IGNORE INTO clients VALUES
+    ("1", "Tata Pvt Ltd", "India", "Private Limited"),
+    ("2", "Infosys Ltd", "India", "Public Limited")
+  `);
 });
 
 module.exports = db;
