@@ -1,5 +1,8 @@
 ﻿# Compliance Tracker
 
+ <img width="953" height="446" alt="image" src="https://github.com/user-attachments/assets/9ca40636-3c36-40ea-8329-68298096e89d" />
+
+
 A full-stack web app to manage compliance tasks and deadlines for clients.
 ## Tech Stack
 - **Frontend:** React 19, Vite 8, Axios
@@ -16,7 +19,7 @@ Frontend
 cd frontend
 npm install
 npm run dev
-Runs on http://localhost:5173.
+Runs on http://localhost:5173
 
 Features
 --View and select clients
@@ -24,3 +27,6 @@ Features
 --Filter tasks by status (All / Pending / Completed)
 --Toggle task status between Pending and Completed
 --Overdue task highlighting
+
+
+<img width="959" height="446" alt="image" src="https://github.com/user-attachments/assets/2b19793c-634d-475c-972c-cf3e547b1461" />
