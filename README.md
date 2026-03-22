@@ -4,7 +4,7 @@
 
  <img width="959" height="446" alt="image" src="https://github.com/user-attachments/assets/b3964e1b-309e-442e-bd1c-6ffcd3862668" />
 
-*Live:** [https://compliance-tracker-pearl.vercel.app](https://compliance-tracker-pearl.vercel.app)
+**Live:** [https://compliance-tracker-pearl.vercel.app](https://compliance-tracker-pearl.vercel.app)
 **API:** [https://compliance-tracker-api-n2pm.onrender.com](https://compliance-tracker-api-n2pm.onrender.com)
 
 A full-stack web app to manage compliance tasks and deadlines for clients.
