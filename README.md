@@ -2,6 +2,9 @@
 
  <img width="953" height="446" alt="image" src="https://github.com/user-attachments/assets/9ca40636-3c36-40ea-8329-68298096e89d" />
 
+ <img width="959" height="446" alt="image" src="https://github.com/user-attachments/assets/b3964e1b-309e-442e-bd1c-6ffcd3862668" />
+
+
 
 A full-stack web app to manage compliance tasks and deadlines for clients.
 ## Tech Stack
@@ -28,5 +31,3 @@ Features
 --Toggle task status between Pending and Completed
 --Overdue task highlighting
 
-
-<img width="959" height="446" alt="image" src="https://github.com/user-attachments/assets/2b19793c-634d-475c-972c-cf3e547b1461" />
