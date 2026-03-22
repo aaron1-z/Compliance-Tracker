@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function TaskList({ selectedClient }) {
+export default function TaskList({ selectedClient, refreshKey }) {
   const [tasks, setTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
 
@@ -10,100 +10,82 @@ export default function TaskList({ selectedClient }) {
       axios
         .get(`http://localhost:5000/tasks/${selectedClient.id}`)
         .then((res) => setTasks(res.data))
-        .catch((err) => console.error(err));
+        .catch((err) => console.error("Failed to load tasks:", err));
     }
-  }, [selectedClient]);
+  }, [selectedClient, refreshKey]);
 
   const updateStatus = (id, status) => {
-    const newStatus =
-      status === "Pending" ? "Completed" : "Pending";
-
+    const newStatus = status === "Pending" ? "Completed" : "Pending";
     axios
-      .put(`http://localhost:5000/tasks/${id}`, {
-        status: newStatus,
-      })
+      .put(`http://localhost:5000/tasks/${id}`, { status: newStatus })
       .then(() => {
         setTasks((prev) =>
           prev.map((task) =>
-            task.id === id
-              ? { ...task, status: newStatus }
-              : task
+            task.id === id ? { ...task, status: newStatus } : task
           )
         );
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Failed to update status:", err));
   };
+
+  const filtered = tasks.filter(
+    (task) => statusFilter === "All" || task.status === statusFilter
+  );
 
   return (
     <div>
-      <h2>Tasks</h2>
+      <div className="task-controls">
+        <h3>Tasks ({filtered.length})</h3>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option>All</option>
+          <option>Pending</option>
+          <option>Completed</option>
+        </select>
+      </div>
 
-      {/* Status Filter Dropdown */}
-      <select
-        onChange={(e) =>
-          setStatusFilter(e.target.value)
-        }
-        style={{ marginBottom: "10px" }}
-      >
-        <option>All</option>
-        <option>Pending</option>
-        <option>Completed</option>
-      </select>
+      {filtered.length === 0 && (
+        <p className="no-tasks">
+          {tasks.length === 0
+            ? "No tasks yet. Add one above."
+            : "No tasks match this filter."}
+        </p>
+      )}
 
-      {/* Task List */}
-      {tasks
-        .filter(
-          (task) =>
-            statusFilter === "All" ||
-            task.status === statusFilter
-        )
-        .map((task) => {
-          const isOverdue =
-            new Date(task.due_date) < new Date() &&
-            task.status !== "Completed";
+      {filtered.map((task) => {
+        const isOverdue =
+          new Date(task.due_date) < new Date() && task.status !== "Completed";
+        const isCompleted = task.status === "Completed";
 
-          return (
-            <div
-              key={task.id}
-              style={{
-                border: "1px solid gray",
-                margin: "8px",
-                padding: "8px",
-                backgroundColor: isOverdue
-                  ? "#ffcccc"
-                  : "#eeeeee",
-              }}
-            >
+        return (
+          <div
+            key={task.id}
+            className={`task-card ${isOverdue ? "overdue" : ""} ${isCompleted ? "completed" : ""}`}
+          >
+            <div className="task-info">
               <h4>{task.title}</h4>
-
-              <p>
-                <strong>Category:</strong>{" "}
-                {task.category}
-              </p>
-
-              <p>
-                <strong>Due Date:</strong>{" "}
-                {task.due_date}
-              </p>
-
-              <p>
-                <strong>Status:</strong>{" "}
-                {task.status}
-              </p>
-
-              <button
-                onClick={() =>
-                  updateStatus(
-                    task.id,
-                    task.status
-                  )
-                }
-              >
-                Toggle Status
-              </button>
+              <div className="task-meta">
+                <span>{task.category}</span>
+                <span>Due: {task.due_date}</span>
+                <span>Priority: {task.priority || "Medium"}</span>
+                <span
+                  className={`status-badge ${isCompleted ? "completed-badge" : "pending"}`}
+                >
+                  {task.status}
+                </span>
+              </div>
             </div>
-          );
-        })}
+            <button
+              className="btn-toggle"
+              onClick={() => updateStatus(task.id, task.status)}
+            >
+              {isCompleted ? "Reopen" : "Complete"}
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }
